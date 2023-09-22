@@ -18,13 +18,13 @@ export default function UserMenu() {
       <div className="flex items-center gap-3">
         <div
           onClick={() => {}}
-          className="hidden md:block text-sm font-semibold px-4 py-3 rounded-full hover:bg-gray-100 cursor-pointer transition"
+          className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-gray-100 md:block"
         >
           Airbnb your home
         </div>
         <div
           onClick={toggleIsOpen}
-          className="p-4 md:px-2 md:py-1 border border-neutral-200 flex items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition"
+          className="flex cursor-pointer items-center gap-3 rounded-full border border-neutral-200 p-4 transition hover:shadow-md md:px-2 md:py-1"
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
@@ -33,8 +33,8 @@ export default function UserMenu() {
         </div>
       </div>
       {isOpen && (
-        <div className="absolute rounded-xl shadow-md md:w-3/4 overflow-hidden right-0 top-12 text-sm bg-white w-[40vw]">
-          <div className="flex flex-col cursor-pointer">
+        <div className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-md md:w-3/4">
+          <div className="flex cursor-pointer flex-col">
             <>
               <MenuItem label="Login" onClick={() => {}} />
               <MenuItem label="Sign up" onClick={() => {}} />

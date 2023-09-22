@@ -5,12 +5,12 @@ export default function Search() {
     <div className="w-full cursor-pointer rounded-full border-[1px] py-2 shadow-sm transition hover:shadow-md md:w-auto">
       <div className="flex items-center justify-between">
         <div className="px-6 text-sm font-semibold">Anywhere</div>
-        <div className="hidden sm:block text-sm font-semibold px-6 border-x flex-1 text-center">
+        <div className="hidden flex-1 border-x px-6 text-center text-sm font-semibold sm:block">
           Any Week
         </div>
-        <div className="text-sm pl-6 pr-2 text-gray-600 flex flex-row items-center gap-3">
+        <div className="flex flex-row items-center gap-3 pl-6 pr-2 text-sm text-gray-600">
           <div className="hidden sm:block">Add Guest</div>
-          <div className="p-2 bg-rose-500 rounded-full text-white">
+          <div className="rounded-full bg-rose-500 p-2 text-white">
             <BiSearch size={18} />
           </div>
         </div>
