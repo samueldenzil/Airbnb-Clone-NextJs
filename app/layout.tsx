@@ -2,6 +2,8 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Nunito } from 'next/font/google'
 
+import { ModalProvider } from '@/components/providers/modal-provider'
+import { ToasterProvider } from '@/components/providers/toaster-provider'
 import Navbar from '@/components/navbar/navbar'
 
 const nunito = Nunito({ subsets: ['latin'] })
@@ -15,6 +17,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={nunito.className}>
+        <ToasterProvider />
+        <ModalProvider />
         <Navbar />
         {children}
       </body>

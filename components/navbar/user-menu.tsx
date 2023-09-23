@@ -3,10 +3,13 @@
 import { useCallback, useState } from 'react'
 import { AiOutlineMenu } from 'react-icons/ai'
 
+import { useModalStore } from '@/hooks/use-modal-store'
 import Avatar from '@/components/avatar'
 import MenuItem from '@/components/navbar/menu-item'
 
 export default function UserMenu() {
+  const { onOpen } = useModalStore()
+
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleIsOpen = useCallback(() => {
@@ -37,7 +40,12 @@ export default function UserMenu() {
           <div className="flex cursor-pointer flex-col">
             <>
               <MenuItem label="Login" onClick={() => {}} />
-              <MenuItem label="Sign up" onClick={() => {}} />
+              <MenuItem
+                label="Sign up"
+                onClick={() => {
+                  onOpen('registerModal')
+                }}
+              />
             </>
           </div>
         </div>
