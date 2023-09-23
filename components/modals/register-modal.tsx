@@ -43,8 +43,10 @@ export default function RegisterModal() {
     console.log(values)
     axios
       .post('/api/register', values)
-      .then(() => {
+      .then((res) => {
+        toast.success(`Hello ${res.data?.name} 👋️`)
         onClose()
+        form.reset()
       })
       .catch((error) => {
         console.log(error)
