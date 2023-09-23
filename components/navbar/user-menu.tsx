@@ -6,8 +6,14 @@ import { AiOutlineMenu } from 'react-icons/ai'
 import { useModalStore } from '@/hooks/use-modal-store'
 import Avatar from '@/components/avatar'
 import MenuItem from '@/components/navbar/menu-item'
+import { User } from '@prisma/client'
+import { signOut } from 'next-auth/react'
 
-export default function UserMenu() {
+type UserMenuProps = {
+  currentUser?: User | null
+}
+
+export default function UserMenu({ currentUser }: UserMenuProps) {
   const { onOpen } = useModalStore()
 
   const [isOpen, setIsOpen] = useState(false)
@@ -38,20 +44,37 @@ export default function UserMenu() {
       {isOpen && (
         <div className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-md md:w-3/4">
           <div className="flex cursor-pointer flex-col">
-            <>
-              <MenuItem
-                label="Login"
-                onClick={() => {
-                  onOpen('loginModal')
-                }}
-              />
-              <MenuItem
-                label="Sign up"
-                onClick={() => {
-                  onOpen('registerModal')
-                }}
-              />
-            </>
+            {currentUser ? (
+              <>
+                <MenuItem label="My trips" onClick={() => {}} />
+                <MenuItem label="My favorites" onClick={() => {}} />
+                <MenuItem label="My reservations" onClick={() => {}} />
+                <MenuItem label="My properties" onClick={() => {}} />
+                <MenuItem label="Airbnb my home" onClick={() => {}} />
+                <hr />
+                <MenuItem
+                  label="Logout"
+                  onClick={() => {
+                    signOut()
+                  }}
+                />
+              </>
+            ) : (
+              <>
+                <MenuItem
+                  label="Login"
+                  onClick={() => {
+                    onOpen('loginModal')
+                  }}
+                />
+                <MenuItem
+                  label="Sign up"
+                  onClick={() => {
+                    onOpen('registerModal')
+                  }}
+                />
+              </>
+            )}
           </div>
         </div>
       )}

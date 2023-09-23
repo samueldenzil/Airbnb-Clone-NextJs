@@ -1,7 +1,8 @@
 'use client'
 
 // import { useState } from 'react'
-import axios from 'axios'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import { AiFillGithub } from 'react-icons/ai'
 import { FcGoogle } from 'react-icons/fc'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
@@ -11,16 +12,16 @@ import { useModalStore } from '@/hooks/use-modal-store'
 import Modal from '@/components/modals/modal'
 import Heading from '@/components/heading'
 import Input from '@/components/inputs/input'
-import Button from '../button'
+import Button from '@/components/button'
 
 export default function LoginModal() {
+  const router = useRouter()
   const { isOpen, onClose, type } = useModalStore()
 
   const isModalOpen = isOpen && type === 'loginModal'
 
   const form = useForm<FieldValues>({
     defaultValues: {
-      name: '',
       email: '',
       password: '',
     },
@@ -29,24 +30,23 @@ export default function LoginModal() {
   const isLoading = form.formState.isSubmitting
 
   const onSubmit: SubmitHandler<FieldValues> = (values) => {
-    axios
-      .post('/api/register', values)
-      .then((res) => {
-        toast.success(`Hello ${res.data?.name} 👋️`)
+    signIn('credentials', { ...values, redirect: false }).then((callback) => {
+      if (callback?.error) {
+        toast.error(callback.error)
+      }
+      console.log(callback)
+      if (callback?.ok && !callback?.error) {
+        toast.success('Welcome back')
+        router.refresh()
         onClose()
-        form.reset()
-      })
-      .catch((error) => {
-        console.log(error)
-        toast.error('Something went wrong')
-      })
+      }
+    })
   }
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading title="Welcome back" subtitle="Login to your account!" />
       <Input id="email" form={form} label="Email" type="email" disabled={isLoading} required />
-      <input type="text" />
       <Input
         id="password"
         form={form}
