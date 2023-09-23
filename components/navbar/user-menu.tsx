@@ -39,7 +39,12 @@ export default function UserMenu() {
         <div className="absolute right-0 top-12 w-[40vw] overflow-hidden rounded-xl bg-white text-sm shadow-md md:w-3/4">
           <div className="flex cursor-pointer flex-col">
             <>
-              <MenuItem label="Login" onClick={() => {}} />
+              <MenuItem
+                label="Login"
+                onClick={() => {
+                  onOpen('loginModal')
+                }}
+              />
               <MenuItem
                 label="Sign up"
                 onClick={() => {

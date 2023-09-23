@@ -11,12 +11,12 @@ import { useModalStore } from '@/hooks/use-modal-store'
 import Modal from '@/components/modals/modal'
 import Heading from '@/components/heading'
 import Input from '@/components/inputs/input'
-import Button from '@/components/button'
+import Button from '../button'
 
-export default function RegisterModal() {
+export default function LoginModal() {
   const { isOpen, onClose, type } = useModalStore()
 
-  const isModalOpen = isOpen && type === 'registerModal'
+  const isModalOpen = isOpen && type === 'loginModal'
 
   const form = useForm<FieldValues>({
     defaultValues: {
@@ -44,9 +44,9 @@ export default function RegisterModal() {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading title="Welcome to Airbnb" subtitle="Create an account" />
+      <Heading title="Welcome back" subtitle="Login to your account!" />
       <Input id="email" form={form} label="Email" type="email" disabled={isLoading} required />
-      <Input id="name" form={form} label="Name" disabled={isLoading} required />
+      <input type="text" />
       <Input
         id="password"
         form={form}
@@ -88,7 +88,7 @@ export default function RegisterModal() {
     <Modal
       disabled={isLoading}
       isOpen={isModalOpen}
-      title="Register"
+      title="Login"
       actionLabel="Continue"
       onClose={onClose}
       onSubmit={form.handleSubmit(onSubmit)}

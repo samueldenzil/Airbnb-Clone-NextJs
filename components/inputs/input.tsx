@@ -1,20 +1,18 @@
 'use client'
 
-import * as z from 'zod'
-import { UseFormReturn } from 'react-hook-form'
+import { FieldValues, UseFormReturn } from 'react-hook-form'
 
-import { registerFormSchema } from '@/components/modals/register-modal'
 import { BiDollar } from 'react-icons/bi'
 import { twMerge } from 'tailwind-merge'
 
 type InputProps = {
-  id: keyof z.infer<typeof registerFormSchema>
+  id: string
   label: string
   type?: 'text' | 'email' | 'password'
   disabled?: boolean
   formatPrice?: boolean
   required?: boolean
-  form: UseFormReturn<z.infer<typeof registerFormSchema>>
+  form: UseFormReturn<FieldValues, any, undefined>
 }
 
 export default function Input({
