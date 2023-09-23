@@ -25,6 +25,7 @@ model Account {
   user      User     @relation(fields: [userId], references: [id])
 
   @@unique([providerId, providerAccountId])
+  @@map("airbnb_account")
 }
 
 model User {
@@ -40,7 +41,8 @@ model User {
   accounts     Account[]
   listings     Listing[]
   reservations Reservation[]
-  // sessions       Session[]
+
+  @@map("airbnb_user")
 }
 
 model Listing {
@@ -61,6 +63,7 @@ model Listing {
   reservations Reservation[]
 
   @@index([userId])
+  @@map("airbnb_listing")
 }
 
 model Reservation {
@@ -78,4 +81,5 @@ model Reservation {
 
   @@index([userId])
   @@index([listingId])
+  @@map("airbnb_reservation")
 }
