@@ -28,6 +28,7 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
     }
 
     // Open Rent modal
+    onOpen('rentModal')
   }, [currentUser, onOpen])
 
   return (
@@ -58,7 +59,12 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
                 <MenuItem label="My favorites" onClick={() => {}} />
                 <MenuItem label="My reservations" onClick={() => {}} />
                 <MenuItem label="My properties" onClick={() => {}} />
-                <MenuItem label="Airbnb my home" onClick={() => {}} />
+                <MenuItem
+                  label="Airbnb my home"
+                  onClick={() => {
+                    onOpen('rentModal')
+                  }}
+                />
                 <hr />
                 <MenuItem
                   label="Logout"
