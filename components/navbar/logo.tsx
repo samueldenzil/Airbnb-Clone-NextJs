@@ -1,10 +1,10 @@
 'use client'
 
 import Image from 'next/image'
-// import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
 export default function Logo() {
-  // const router = useRouter();
+  const router = useRouter()
 
   return (
     <Image
@@ -12,6 +12,7 @@ export default function Logo() {
       height={100}
       width={100}
       alt="logo"
+      onClick={() => router.push('/')}
       className="hidden cursor-pointer md:block"
     />
   )
