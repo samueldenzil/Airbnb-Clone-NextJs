@@ -14,7 +14,7 @@ type UserMenuProps = {
 }
 
 export default function UserMenu({ currentUser }: UserMenuProps) {
-  const { onOpen } = useModalStore()
+  const { onOpen, onClose } = useModalStore()
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -22,11 +22,19 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
     setIsOpen((prevState) => !prevState)
   }, [])
 
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return onOpen('loginModal')
+    }
+
+    // Open Rent modal
+  }, [currentUser, onOpen])
+
   return (
     <div className="relative">
       <div className="flex items-center gap-3">
         <div
-          onClick={() => {}}
+          onClick={onRent}
           className="hidden cursor-pointer rounded-full px-4 py-3 text-sm font-semibold transition hover:bg-gray-100 md:block"
         >
           Airbnb your home
@@ -61,18 +69,8 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
               </>
             ) : (
               <>
-                <MenuItem
-                  label="Login"
-                  onClick={() => {
-                    onOpen('loginModal')
-                  }}
-                />
-                <MenuItem
-                  label="Sign up"
-                  onClick={() => {
-                    onOpen('registerModal')
-                  }}
-                />
+                <MenuItem label="Login" onClick={() => onOpen('loginModal')} />
+                <MenuItem label="Sign up" onClick={() => onOpen('registerModal')} />
               </>
             )}
           </div>

@@ -1,6 +1,6 @@
 'use client'
 
-// import { useState } from 'react'
+import { useCallback } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { AiFillGithub } from 'react-icons/ai'
@@ -16,7 +16,7 @@ import Button from '@/components/button'
 
 export default function LoginModal() {
   const router = useRouter()
-  const { isOpen, onClose, type } = useModalStore()
+  const { isOpen, onOpen, onClose, type } = useModalStore()
 
   const isModalOpen = isOpen && type === 'loginModal'
 
@@ -28,6 +28,11 @@ export default function LoginModal() {
   })
 
   const isLoading = form.formState.isSubmitting
+
+  const toggle = useCallback(() => {
+    onClose()
+    onOpen('registerModal')
+  }, [onClose, onOpen])
 
   const onSubmit: SubmitHandler<FieldValues> = (values) => {
     signIn('credentials', { ...values, redirect: false }).then((callback) => {
@@ -72,12 +77,12 @@ export default function LoginModal() {
       <Button outline label="Continue with GitHub" icon={AiFillGithub} onClick={() => {}} />
       <div className="mt-2 text-center font-light text-neutral-500">
         <div className="flex items-center justify-center gap-2">
-          <div>Already have an account?</div>
+          <div>First time using Airbnb?</div>
           <span
-            onClick={onClose}
+            onClick={toggle}
             className="cursor-pointer text-neutral-800 transition hover:underline"
           >
-            Login
+            Create an account
           </span>
         </div>
       </div>
