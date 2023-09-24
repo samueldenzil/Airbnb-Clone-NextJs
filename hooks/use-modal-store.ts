@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-export type ModalType = 'registerModal' | 'loginModal'
+export type ModalType = 'registerModal' | 'loginModal' | 'rentModal'
 
 type ModalState = {
   type: ModalType | null
