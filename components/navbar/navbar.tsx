@@ -1,8 +1,10 @@
+import { User } from '@prisma/client'
+
 import Container from '@/components/container'
 import Logo from '@/components/navbar/logo'
 import Search from '@/components/navbar/search'
 import UserMenu from '@/components/navbar/user-menu'
-import { User } from '@prisma/client'
+import Categories from '@/components/navbar/categories'
 
 type NavbarProps = {
   currentUser?: User | null
@@ -20,6 +22,7 @@ export default function Navbar({ currentUser }: NavbarProps) {
           </div>
         </Container>
       </div>
+      <Categories />
     </div>
   )
 }
