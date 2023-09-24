@@ -1,6 +1,6 @@
 'use client'
 
-// import { useState } from 'react'
+import { useCallback } from 'react'
 import axios from 'axios'
 import { AiFillGithub } from 'react-icons/ai'
 import { FcGoogle } from 'react-icons/fc'
@@ -14,7 +14,7 @@ import Input from '@/components/inputs/input'
 import Button from '@/components/button'
 
 export default function RegisterModal() {
-  const { isOpen, onClose, type } = useModalStore()
+  const { isOpen, onOpen, onClose, type } = useModalStore()
 
   const isModalOpen = isOpen && type === 'registerModal'
 
@@ -27,6 +27,11 @@ export default function RegisterModal() {
   })
 
   const isLoading = form.formState.isSubmitting
+
+  const toggle = useCallback(() => {
+    onClose()
+    onOpen('loginModal')
+  }, [onClose, onOpen])
 
   const onSubmit: SubmitHandler<FieldValues> = (values) => {
     axios
@@ -74,7 +79,7 @@ export default function RegisterModal() {
         <div className="flex items-center justify-center gap-2">
           <div>Already have an account?</div>
           <span
-            onClick={onClose}
+            onClick={toggle}
             className="cursor-pointer text-neutral-800 transition hover:underline"
           >
             Login
