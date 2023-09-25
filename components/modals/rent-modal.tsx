@@ -1,11 +1,12 @@
 import { useMemo, useState } from 'react'
+import { FieldValues, useForm } from 'react-hook-form'
 
 import { useModalStore } from '@/hooks/use-modal-store'
 import Modal from './modal'
 import Heading from '@/components/heading'
 import { categories } from '@/components/navbar/categories'
 import CategoryInput from '@/components/inputs/category-input'
-import { FieldValues, useForm } from 'react-hook-form'
+import CountrySelect from '@/components/inputs/country-select'
 
 enum STEPS {
   CATEGORY = 0,
@@ -24,10 +25,12 @@ export default function RentModal() {
   const form = useForm<FieldValues>({
     defaultValues: {
       category: '',
+      location: '',
     },
   })
 
   const category = form.watch('category')
+  const location = form.watch('location')
 
   const setCustomValue = (id: string, value: any) => {
     form.setValue(id, value, {
@@ -79,11 +82,20 @@ export default function RentModal() {
     </div>
   )
 
+  if (step === STEPS.LOCATION) {
+    bodyContent = (
+      <div>
+        <Heading title="Where is your place located?" subtitle="Help guests find you!" />
+        <CountrySelect value={location} onChange={(value) => setCustomValue('location', value)} />
+      </div>
+    )
+  }
+
   return (
     <Modal
       title="Airbnb your home!"
       actionLabel={actionLabel}
-      onSubmit={onClose}
+      onSubmit={onNext}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
       isOpen={isModalOpen}
