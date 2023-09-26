@@ -1,5 +1,8 @@
 import { useMemo, useState } from 'react'
-import { FieldValues, useForm } from 'react-hook-form'
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
+import { v4 as uuidv4 } from 'uuid'
+import axios from 'axios'
 
 import { useModalStore } from '@/hooks/use-modal-store'
 import Modal from './modal'
@@ -10,6 +13,9 @@ import CategoryInput from '@/components/inputs/category-input'
 import CountrySelect from '@/components/inputs/country-select'
 import Counter from '@/components/inputs/counter'
 import ImageUpload from '@/components/inputs/image-upload'
+import Input from '@/components/inputs/input'
+import toast from 'react-hot-toast'
+import supabase from '@/lib/supabase'
 
 enum STEPS {
   CATEGORY = 0,
@@ -21,6 +27,8 @@ enum STEPS {
 }
 
 export default function RentModal() {
+  const router = useRouter()
+
   const { isOpen, onClose, type } = useModalStore()
 
   const isModalOpen = isOpen && type === 'rentModal'
@@ -33,8 +41,13 @@ export default function RentModal() {
       roomCount: 1,
       bathroomCount: 1,
       imageProperty: null,
+      title: '',
+      description: '',
+      price: 1,
     },
   })
+
+  const isLoading = form.formState.isSubmitting
 
   const category = form.watch('category')
   const location = form.watch('location')
@@ -59,6 +72,43 @@ export default function RentModal() {
 
   const onNext = () => {
     setStep((value) => value + 1)
+  }
+
+  const onSubmit: SubmitHandler<FieldValues> = async (values) => {
+    if (step !== STEPS.PRICE) {
+      return onNext()
+    }
+
+    // Uploading image file to supabase storage
+    const path = `airbnb/listings/${uuidv4()}.${values?.imageProperty?.image?.name
+      .split('.')
+      .pop()}`
+    const { data: supabaseImageData, error } = await supabase.storage
+      .from('images')
+      .upload(path, values?.imageProperty?.image)
+    if (error) {
+      console.error('Error uploading image:', error)
+      return
+    }
+
+    const { data: publicUrlData } = supabase.storage.from('images').getPublicUrl(path)
+
+    const data = { ...values, imageSrc: publicUrlData.publicUrl }
+    // console.log(data)
+
+    axios
+      .post('/api/listings', data)
+      .then(() => {
+        toast.success('Listing created!')
+        router.refresh()
+        form.reset()
+        setStep(STEPS.CATEGORY)
+        onClose()
+      })
+      .catch((error: any) => {
+        const errorMessage = error?.response?.data ? error.response.data : 'Something went wrong'
+        toast.error(`Error: ${errorMessage}`)
+      })
   }
 
   const actionLabel = useMemo(() => {
@@ -149,11 +199,42 @@ export default function RentModal() {
     )
   }
 
+  if (step === STEPS.DESCRIPTION) {
+    bodyContent = (
+      <div className="flex flex-col gap-y-8">
+        <Heading
+          title="How would you describe your place?"
+          subtitle="Short and sweet works best!"
+        />
+        <Input id="title" label="Title" form={form} disabled={isLoading} required />
+        <hr />
+        <Input id="description" label="Description" form={form} disabled={isLoading} required />
+      </div>
+    )
+  }
+
+  if (step === STEPS.PRICE) {
+    bodyContent = (
+      <div className="flex flex-col gap-y-8">
+        <Heading title="Now, set your price" subtitle="How much do you charge per night?" />
+        <Input
+          id="price"
+          label="Price"
+          formatPrice
+          type="number"
+          form={form}
+          disabled={isLoading}
+          required
+        />
+      </div>
+    )
+  }
+
   return (
     <Modal
       title="Airbnb your home!"
       actionLabel={actionLabel}
-      onSubmit={onNext}
+      onSubmit={form.handleSubmit(onSubmit)}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
       isOpen={isModalOpen}

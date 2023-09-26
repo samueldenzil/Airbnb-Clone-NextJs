@@ -8,7 +8,7 @@ import { twMerge } from 'tailwind-merge'
 type InputProps = {
   id: string
   label: string
-  type?: 'text' | 'email' | 'password'
+  type?: 'text' | 'email' | 'password' | 'number'
   disabled?: boolean
   formatPrice?: boolean
   required?: boolean
