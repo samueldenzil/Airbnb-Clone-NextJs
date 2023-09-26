@@ -10,6 +10,7 @@ import CategoryInput from '@/components/inputs/category-input'
 import CountrySelect from '@/components/inputs/country-select'
 import Counter from '@/components/inputs/counter'
 import ImageUpload from '@/components/inputs/image-upload'
+import Input from '@/components/inputs/input'
 
 enum STEPS {
   CATEGORY = 0,
@@ -33,8 +34,12 @@ export default function RentModal() {
       roomCount: 1,
       bathroomCount: 1,
       imageProperty: null,
+      title: '',
+      description: '',
     },
   })
+
+  const isLoading = form.formState.isSubmitting
 
   const category = form.watch('category')
   const location = form.watch('location')
@@ -145,6 +150,20 @@ export default function RentModal() {
           value={imageProperty}
           onChange={(value) => setCustomValue('imageProperty', value)}
         />
+      </div>
+    )
+  }
+
+  if (step === STEPS.DESCRIPTION) {
+    bodyContent = (
+      <div className="flex flex-col gap-y-8">
+        <Heading
+          title="How would you describe your place?"
+          subtitle="Short and sweet works best!"
+        />
+        <Input id="title" label="Title" form={form} disabled={isLoading} />
+        <hr />
+        <Input id="description" label="Description" form={form} disabled={isLoading} />
       </div>
     )
   }
