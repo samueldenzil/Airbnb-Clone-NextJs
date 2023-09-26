@@ -9,6 +9,7 @@ import { categories } from '@/components/navbar/categories'
 import CategoryInput from '@/components/inputs/category-input'
 import CountrySelect from '@/components/inputs/country-select'
 import Counter from '@/components/inputs/counter'
+import ImageUpload from '@/components/inputs/image-upload'
 
 enum STEPS {
   CATEGORY = 0,
@@ -31,6 +32,7 @@ export default function RentModal() {
       guestCount: 1,
       roomCount: 1,
       bathroomCount: 1,
+      imageProperty: null,
     },
   })
 
@@ -39,6 +41,7 @@ export default function RentModal() {
   const guestCount = form.watch('guestCount')
   const roomCount = form.watch('roomCount')
   const bathroomCount = form.watch('bathroomCount')
+  const imageProperty = form.watch('imageProperty')
 
   const setCustomValue = (id: string, value: any) => {
     form.setValue(id, value, {
@@ -126,6 +129,21 @@ export default function RentModal() {
           subtitle="How may bathrooms do you have?"
           value={bathroomCount}
           onChange={(value) => setCustomValue('bathroomCount', value)}
+        />
+      </div>
+    )
+  }
+
+  if (step === STEPS.IMAGES) {
+    bodyContent = (
+      <div className="flex flex-col gap-y-8">
+        <Heading
+          title="Add photo of your place"
+          subtitle="Show guests what your place looks like!"
+        />
+        <ImageUpload
+          value={imageProperty}
+          onChange={(value) => setCustomValue('imageProperty', value)}
         />
       </div>
     )
