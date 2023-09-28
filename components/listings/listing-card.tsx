@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import Image from 'next/image'
-import { Listing } from '@prisma/client'
+import { Listing, User } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 
 import useCountries from '@/hooks/use-countries'
@@ -10,9 +10,10 @@ import HeartButton from '@/components/heart-button'
 
 type ListingCardProps = {
   data: Listing
+  user?: User | null
 }
 
-export default function ListingCard({ data }: ListingCardProps) {
+export default function ListingCard({ data, user }: ListingCardProps) {
   const router = useRouter()
   const { getByValue } = useCountries()
 
@@ -36,7 +37,7 @@ export default function ListingCard({ data }: ListingCardProps) {
             className="h-full w-full object-cover transition group-hover:scale-110"
           />
           <div className="absolute right-3 top-3">
-            <HeartButton listingId={data.id} currentUser={null} />
+            <HeartButton listingId={data.id} user={user} />
           </div>
         </div>
         <div className="text-lg font-semibold">

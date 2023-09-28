@@ -1,17 +1,17 @@
 'use client'
 
+import useFavorite from '@/hooks/use-favorite'
 import { User } from '@prisma/client'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { twMerge } from 'tailwind-merge'
 
 type HeartButtonProps = {
   listingId: string
-  currentUser?: User | null
+  user?: User | null
 }
 
-export default function HeartButton({ listingId, currentUser }: HeartButtonProps) {
-  const hasFavorited = false
-  const toggleFavorite = () => {}
+export default function HeartButton({ listingId, user }: HeartButtonProps) {
+  const { hasFavorited, toggleFavorite } = useFavorite({ listingId, user })
 
   return (
     <div onClick={toggleFavorite} className="relative cursor-pointer transition hover:opacity-80">
