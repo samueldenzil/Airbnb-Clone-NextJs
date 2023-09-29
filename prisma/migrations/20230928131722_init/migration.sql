@@ -24,6 +24,7 @@ CREATE TABLE "airbnb_user" (
     "hashedPassword" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "favoriteIds" TEXT[],
 
     CONSTRAINT "airbnb_user_pkey" PRIMARY KEY ("id")
 );
