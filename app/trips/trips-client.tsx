@@ -9,10 +9,7 @@ import toast from 'react-hot-toast'
 import Container from '@/components/container'
 import Heading from '@/components/heading'
 import ListingCard from '@/components/listings/listing-card'
-
-type ReservationWithListings = Reservation & {
-  listing: Listing
-}
+import { ReservationWithListings } from '@/types'
 
 type TripsClientProps = {
   reservations: ReservationWithListings[]
