@@ -5,9 +5,14 @@ import { getCurrentUser } from '@/lib/get-current-user'
 import Container from '@/components/container'
 import EmptyState from '@/components/empty-state'
 import ListingCard from '@/components/listings/listing-card'
+import { TListingsParams } from '@/lib/get-listings'
 
-export default async function Home() {
-  const listings = await getListings()
+type HomeProps = {
+  searchParams: TListingsParams
+}
+
+export default async function Home({ searchParams }: HomeProps) {
+  const listings = await getListings(searchParams)
   const user = await getCurrentUser()
 
   if (listings.length === 0) {
