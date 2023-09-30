@@ -6,6 +6,8 @@ import { AiFillGithub } from 'react-icons/ai'
 import { FcGoogle } from 'react-icons/fc'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 import { useModalStore } from '@/hooks/use-modal-store'
 import Modal from '@/components/modals/modal'
@@ -14,6 +16,7 @@ import Input from '@/components/inputs/input'
 import Button from '@/components/button'
 
 export default function RegisterModal() {
+  const router = useRouter()
   const { isOpen, onOpen, onClose, type } = useModalStore()
 
   const isModalOpen = isOpen && type === 'registerModal'
@@ -37,13 +40,21 @@ export default function RegisterModal() {
     axios
       .post('/api/register', values)
       .then((res) => {
-        toast.success(`Hello ${res.data?.name} 👋️`)
+        signIn('credentials', { ...values, redirect: false }).then((callback) => {
+          if (callback?.error) {
+            toast.error(callback.error)
+          }
+          if (callback?.ok && !callback?.error) {
+            toast.success(`Hello ${res.data?.name} 👋️`)
+            router.refresh()
+          }
+        })
         onClose()
         form.reset()
       })
       .catch((error) => {
-        console.log(error)
-        toast.error('Something went wrong')
+        const errorMessage = error?.response?.data ? error.response.data : 'Something went wrong'
+        toast.error(errorMessage)
       })
   }
 
