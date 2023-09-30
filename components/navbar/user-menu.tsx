@@ -1,19 +1,21 @@
 'use client'
 
 import { useCallback, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { AiOutlineMenu } from 'react-icons/ai'
+import { User } from '@prisma/client'
+import { signOut } from 'next-auth/react'
 
 import { useModalStore } from '@/hooks/use-modal-store'
 import Avatar from '@/components/avatar'
 import MenuItem from '@/components/navbar/menu-item'
-import { User } from '@prisma/client'
-import { signOut } from 'next-auth/react'
 
 type UserMenuProps = {
   currentUser?: User | null
 }
 
 export default function UserMenu({ currentUser }: UserMenuProps) {
+  const router = useRouter()
   const { onOpen, onClose } = useModalStore()
 
   const [isOpen, setIsOpen] = useState(false)
@@ -55,7 +57,7 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
           <div className="flex cursor-pointer flex-col">
             {currentUser ? (
               <>
-                <MenuItem label="My trips" onClick={() => {}} />
+                <MenuItem label="My trips" onClick={() => router.push('/trips')} />
                 <MenuItem label="My favorites" onClick={() => {}} />
                 <MenuItem label="My reservations" onClick={() => {}} />
                 <MenuItem label="My properties" onClick={() => {}} />
