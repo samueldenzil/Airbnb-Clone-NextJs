@@ -66,8 +66,7 @@ export default function ListingClient({ listing, user, reservations = [] }: List
       .then(() => {
         toast.success('Listing reserved!')
         setDateRange(initialDateRange)
-        // redirect to /trips
-        router.refresh()
+        router.push('/trips')
       })
       .catch((error) => {
         const errorMessage = error?.response?.data ? error.response.data : 'Something went wrong.'
