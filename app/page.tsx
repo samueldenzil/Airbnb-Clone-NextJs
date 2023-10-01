@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import { Listing } from '@prisma/client'
 
 import { getListings } from '@/lib/get-listings'
