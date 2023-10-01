@@ -1,8 +1,16 @@
+'use client'
+
+import { useModalStore } from '@/hooks/use-modal-store'
 import { BiSearch } from 'react-icons/bi'
 
 export default function Search() {
+  const { onOpen } = useModalStore()
+
   return (
-    <div className="w-full cursor-pointer rounded-full border-[1px] py-2 shadow-sm transition hover:shadow-md md:w-auto">
+    <div
+      onClick={() => onOpen('searchModal')}
+      className="w-full cursor-pointer rounded-full border-[1px] py-2 shadow-sm transition hover:shadow-md md:w-auto"
+    >
       <div className="flex items-center justify-between">
         <div className="px-6 text-sm font-semibold">Anywhere</div>
         <div className="hidden flex-1 border-x px-6 text-center text-sm font-semibold sm:block">

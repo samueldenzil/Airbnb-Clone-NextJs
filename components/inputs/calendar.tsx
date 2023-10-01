@@ -4,7 +4,7 @@ import { DateRange, Range, RangeKeyDict } from 'react-date-range'
 
 type CalendarProps = {
   value: Range
-  disabledDates: Date[]
+  disabledDates?: Date[]
   onChange: (value: RangeKeyDict) => void
 }
 
