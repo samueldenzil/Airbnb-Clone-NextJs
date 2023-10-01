@@ -14,6 +14,8 @@ This is a Fullstack Airbnb Clone with Next.js 13, React, Prisma, Tailwind, Postg
 ## Screenshot(s)
 
 ![Screenshot 1](Documentation/home-page-screenshot.jpg 'Home Page Screenshot')
+![Screenshot 1](Documentation/listing-page-screenshot-1.jpg 'Listing Page 1 Screenshot')
+![Screenshot 1](Documentation/listing-page-screenshot-2.jpg 'Listing Page 2 Screenshot')
 
 ### Built With
 
@@ -25,4 +27,5 @@ This is a Fullstack Airbnb Clone with Next.js 13, React, Prisma, Tailwind, Postg
 - [zustand](https://zustand-demo.pmnd.rs/)
 - [Supabase](https://supabase.com/)
 - [Prisma.io](https://prisma.io/)
+- [Mapbox](https://www.mapbox.com/)
 - [Vercel](https://vercel.com/)
