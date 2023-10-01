@@ -11,6 +11,10 @@ This is a Fullstack Airbnb Clone with Next.js 13, React, Prisma, Tailwind, Postg
 - ORM using Prisma and PostgreSQL database using Supabase.
 - Authentication with Auth.js.
 
+## Screenshot(s)
+
+![Screenshot 1](Documentation/home-page-screenshot.jpg 'Home Page Screenshot')
+
 ### Built With
 
 - [Next.js](https://nextjs.org/)
