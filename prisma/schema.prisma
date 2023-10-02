@@ -2,12 +2,14 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  schemas  = ["airbnb_clone"]
 }
 
 model Account {
@@ -25,7 +27,7 @@ model Account {
   user      User     @relation(fields: [userId], references: [id])
 
   @@unique([providerId, providerAccountId])
-  @@map("airbnb_account")
+  @@schema("airbnb_clone")
 }
 
 model User {
@@ -43,7 +45,7 @@ model User {
   listings     Listing[]
   reservations Reservation[]
 
-  @@map("airbnb_user")
+  @@schema("airbnb_clone")
 }
 
 model Listing {
@@ -64,7 +66,7 @@ model Listing {
   reservations Reservation[]
 
   @@index([userId])
-  @@map("airbnb_listing")
+  @@schema("airbnb_clone")
 }
 
 model Reservation {
@@ -82,5 +84,5 @@ model Reservation {
 
   @@index([userId])
   @@index([listingId])
-  @@map("airbnb_reservation")
+  @@schema("airbnb_clone")
 }
